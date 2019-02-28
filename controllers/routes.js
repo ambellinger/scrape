@@ -1,5 +1,8 @@
 // Require all models
-var db = require("./models");
+var db = require("../models");
+var express = require("express");
+var cheerio = require("cheerio");
+var axios = require("axios");
 
 // Our scraping tools
 // Axios is a promised-based http library, similar to jQuery's Ajax method
@@ -8,7 +11,7 @@ var axios = require("axios");
 var cheerio = require("cheerio");
 
 // Initialize Express
-var app = express();
+var app = express.Router();
 // Routes
 
 // A GET route for scraping the echoJS website
@@ -48,6 +51,35 @@ app.get("/scrape", function(req, res) {
     });
   });
   
+  //homepage
+  app.get("/", function(req, res) {
+    // Grab every document in the Articles collection
+    db.Article.find({})
+    var hbsObject = {
+      scrapes: dbArticle
+    };
+    console.log(hbsObject);
+    res.render("index", hbsObject)
+
+      .catch(function(err) {
+        // If an error occurred, send it to the client
+        res.json(err);
+      });
+  });
+
+  //delete note
+app.delete("/articles/:id", function (req, res) {
+
+  console.log("id:"+req.params.id);
+  db.Article.findByIdAndRemove(req.params.id, function (err) {
+    if (err)
+      res.send(err);
+    else
+      res.json({ message: 'Note Deleted!' });
+  });
+ });
+
+
   // Route for getting all Articles from the db
   app.get("/articles", function(req, res) {
     // Grab every document in the Articles collection
@@ -98,3 +130,4 @@ app.get("/scrape", function(req, res) {
       });
   });
   
+  module.exports = app;
