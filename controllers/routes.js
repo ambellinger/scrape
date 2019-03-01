@@ -63,6 +63,16 @@ app.delete("/articles/:id", function (req, res) {
   });
  });
 
+app.post("/articles/:id", function (req, res) {
+   db.Article.findByIdAndUpdate({_id: req.params.id}, { saved: true })
+    .then(function(dbArticle) {
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
+      res.json(err);
+    })
+ });
+
   // Route for getting all Articles from the db
   app.get("/", function(req, res) {
     // Grab every document in the Articles collection

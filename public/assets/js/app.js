@@ -79,7 +79,7 @@ $(document).on("click", "#savenote", function () {
 
 
 
-// When you click the savenote button
+// When you click the delete button
 $(document).on("click", ".deletebtn", function () {
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
@@ -92,13 +92,32 @@ $(document).on("click", ".deletebtn", function () {
   })
     // With that done
     .then(function (data) {
-      location.reload();
-
-      
+    location.reload(); 
     });
+
+  });
+
+// When you click the save article button
+$(document).on("click", ".savedbtn", function () {
+  console.log("saved button was clicked");
+  // Grab the id associated with the article from the submit button
+  var thisId = $(this).attr("data-id");
+
+  // Run a POST request to change the note, using what's entered in the inputs
+   $.ajax({
+     method: "POST",
+     url: "/articles/" + thisId
+
+   })
+     // With that done
+     .then(function (data) {
+       location.reload(); 
+     });
+  });
+
 
   // Also, remove the values entered in the input and textarea for note entry
   $("#titleinput").val("");
   $("#bodyinput").val("");
-});
+
  
