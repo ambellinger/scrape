@@ -131,6 +131,25 @@ $(document).on("click", ".savedbtn", function () {
   });
 
 
+// When you click the delete all articles button
+$(document).on("click", ".deleteall", function () {
+  console.log("clicked delete all button");
+  // Grab the id associated with the article from the submit button
+  // var thisId = $(this).attr("data-id");
+
+  // // Run a POST request to change the note, using what's entered in the inputs
+  $.ajax({
+     method: "DELETE",
+     url: "/articles/"
+
+  })
+     // With that done
+     .then(function (data) {
+     location.reload(); 
+     });
+
+  });
+
   // Also, remove the values entered in the input and textarea for note entry
   $("#titleinput").val("");
   $("#bodyinput").val("");

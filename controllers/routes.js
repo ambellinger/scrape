@@ -91,6 +91,19 @@ app.post("/articles/:id", function (req, res) {
   });
 
 
+app.delete("/deleteall", function(req, res) {
+     console.log("DELETE ALL BUTTON");
+      db.Article.dropCollection()
+      .then(function(dbArticle) {
+        res.json(dbArticle);
+      })
+      .catch(function(err) {
+        res.json(err);
+      })
+    });
+
+
+
   app.get("/saved", function(req, res) {
     db.Article.find({saved:true})
     .then(function(data) {
