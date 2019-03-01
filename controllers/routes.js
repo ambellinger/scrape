@@ -1,23 +1,18 @@
-// Require all models
-var db = require("../models");
-var express = require("express");
-var cheerio = require("cheerio");
-var axios = require("axios");
-
 // Our scraping tools
 // Axios is a promised-based http library, similar to jQuery's Ajax method
 // It works on the client and on the server
 var axios = require("axios");
 var cheerio = require("cheerio");
+var express = require("express");
 
-// Initialize Express
 var app = express.Router();
-// Routes
+// Require all models
+var db = require("../models");
 
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
     // First, we grab the body of the html with axios
-    axios.get("http://www.echojs.com/").then(function(response) {
+    axios.get("https://www.nytimes.com/section/sports").then(function(response) {
       // Then, we load that into cheerio and save it to $ for a shorthand selector
       var $ = cheerio.load(response.data);
   
@@ -29,16 +24,16 @@ app.get("/scrape", function(req, res) {
         // Add the text and href of every link, and save them as properties of the result object
         result.title = $(this)
           .children("a")
-          .text();
+          .text()
         result.link = $(this)
-          .children("a")
-          .attr("href");
+            .children("a")
+            .attr("href");
   
         // Create a new Article using the `result` object built from scraping
         db.Article.create(result)
           .then(function(dbArticle) {
             // View the added result in the console
-            console.log(dbArticle);
+            console.log("results" + dbArticle);
           })
           .catch(function(err) {
             // If an error occurred, log it
@@ -47,27 +42,11 @@ app.get("/scrape", function(req, res) {
       });
   
       // Send a message to the client
-      res.send("Scrape Complete");
+      res.send("Scrape Complete.. <a href='/'>home page</a>" );
     });
   });
   
-  //homepage
-  app.get("/", function(req, res) {
-    // Grab every document in the Articles collection
-    db.Article.find({})
-    var hbsObject = {
-      scrapes: dbArticle
-    };
-    console.log(hbsObject);
-    res.render("index", hbsObject)
-
-      .catch(function(err) {
-        // If an error occurred, send it to the client
-        res.json(err);
-      });
-  });
-
-  //delete note
+//delete note
 app.delete("/articles/:id", function (req, res) {
 
   console.log("id:"+req.params.id);
@@ -78,6 +57,23 @@ app.delete("/articles/:id", function (req, res) {
       res.json({ message: 'Note Deleted!' });
   });
  });
+
+  // Route for getting all Articles from the db
+  app.get("/", function(req, res) {
+    // Grab every document in the Articles collection
+    db.Article.find({})
+      .then(function(data) {
+        var hbsObject = {
+          scrapes: data
+        };
+        console.log(hbsObject);
+        res.render("index", hbsObject);
+      })
+      .catch(function(err) {
+        // If an error occurred, send it to the client
+        res.json(err);
+      });
+  });
 
 
   // Route for getting all Articles from the db
@@ -129,5 +125,5 @@ app.delete("/articles/:id", function (req, res) {
         res.json(err);
       });
   });
-  
+
   module.exports = app;
