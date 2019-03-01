@@ -7,7 +7,23 @@ $.getJSON("/articles", function (data) {
   + "<button data-id='" + data[i]._id + "' class='savedbtn'> Save Article </button>" 
   + "<p data-id='" + "'>");
 }
+
+for (var i = 0; i < data.length; i++) {
+  
+  if (data[i].saved) {
+  // Display the apropos information on the page
+  $("#savedarticles").append("<a href='https://www.nytimes.com" + data[i].link + "' target='_blank'>" +  data[i].title + "</a>"
+  + "<button data-id='" + data[i]._id + "' class='deletebtn'> Delete Article </button>" 
+  + "<button data-id='" + data[i]._id + "' class='savedbtn'> Save Article </button>" 
+  + "<p data-id='" + "'>"
+  + "   " + data[i].saved);
+}
+}
+
 });
+
+
+
 
 
 //NOTES
