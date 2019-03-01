@@ -10,7 +10,6 @@ $.getJSON("/articles", function (data) {
 });
 
 
-
 //NOTES
 // Whenever someone clicks a p tag
 $(document).on("click", "p", function () {

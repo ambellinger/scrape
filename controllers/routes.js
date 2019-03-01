@@ -91,6 +91,21 @@ app.post("/articles/:id", function (req, res) {
   });
 
 
+  app.get("/saved", function(req, res) {
+    db.Article.find({saved:true})
+    .then(function(data) {
+      var hbsObject = {
+        scrapes: data
+      };
+      console.log("SAVED DATA:" + hbsObject);
+      res.render("saved", hbsObject);
+    })
+    .catch(function(err) {
+      res.json(err);
+    })
+  })
+
+
   // Route for getting all Articles from the db
   app.get("/articles", function(req, res) {
     // Grab every document in the Articles collection

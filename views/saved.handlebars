@@ -1,0 +1,14 @@
+<div id="wrapper">
+      <h1>SAVED</h1>
+      <h2><i>If you can do this...the homework should be no problem.</i></h2>
+      
+      
+
+  {{#each scrapes}}
+  {{#if saved}}
+
+      <div id="articles">{{this.saved}}</div>
+      {{!-- <div id="notes">{{this.note}}</div> --}}
+  {{/if}}    
+  {{/each}}
+    </div>
