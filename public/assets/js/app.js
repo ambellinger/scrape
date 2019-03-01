@@ -1,3 +1,4 @@
+
 $.getJSON("/articles", function (data) {
  // For each one
  for (var i = 0; i < data.length; i++) {
@@ -134,19 +135,15 @@ $(document).on("click", ".savedbtn", function () {
 // When you click the delete all articles button
 $(document).on("click", ".deleteall", function () {
   console.log("clicked delete all button");
-  // Grab the id associated with the article from the submit button
-  // var thisId = $(this).attr("data-id");
 
-  // // Run a POST request to change the note, using what's entered in the inputs
   $.ajax({
-     method: "DELETE",
-     url: "/articles/"
-
+    method: "DELETE",
+    url: "/articles"
   })
-     // With that done
-     .then(function (data) {
-     location.reload(); 
-     });
+
+      .then(function (data) {
+      location.reload(); 
+      });
 
   });
 
