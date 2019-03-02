@@ -15,7 +15,7 @@ for (var i = 0; i < data.length; i++) {
   // Display the apropos information on the page
   $("#savedarticles").append("<a href='https://www.nytimes.com" + data[i].link + "' target='_blank'>" +  data[i].title + "</a>"
   + "<button data-id='" + data[i]._id + "' class='deletebtn'> Delete Article </button>" 
-  + "<button data-id='" + data[i]._id + "' class='savedbtn'> Save Article </button>" 
+  + "<button type='button' data-id='" + data[i]._id + "' class='notesbtn btn btn-primary ' data-toggle='modal' data-target='#exampleModal'> Note</button>" 
   + "<p data-id='" + "'>"
   + "   " + data[i].saved);
 }
@@ -24,12 +24,15 @@ for (var i = 0; i < data.length; i++) {
 });
 
 
-
+$(".modal").hide();
 
 
 //NOTES
 // Whenever someone clicks a p tag
-$(document).on("click", "p", function () {
+$(document).on("click", ".notesbtn", function () {
+  $(".modal").show();
+  // <!-- Modal -->
+  
 
   //alert("hi");
   // Empty the notes from the note section
@@ -44,6 +47,9 @@ $(document).on("click", "p", function () {
   })
     // With that done, add the note information to the page
     .then(function (data) {
+      $(".modal").modal("toggle");
+
+
       console.log(data);
       // The title of the article
       $("#notes").append("<h2>" + data.title + "</h2>");
@@ -140,7 +146,6 @@ $(document).on("click", ".deleteall", function () {
     method: "DELETE",
     url: "/articles"
   })
-
       .then(function (data) {
       location.reload(); 
       });

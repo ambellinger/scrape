@@ -6,14 +6,42 @@
 
   {{#each scrapes}}
   {{#if saved}}
-
+      
       <div id="savedarticles"></div>
+
+     <div id="notes">{{this.note}}</div>
+     <!-- Button trigger modal -->
+{{!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button> --}}
+
 
         {{!-- {{this.saved}} --}}
 
+   </div>
 
+    <div id="results-modal" class="modal" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content"style="width: 90%">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">&times;</button>
+                    <h2 class="modal-title"><strong>Your match</strong></h2>
+                </div>
+                <div class="modal-body" style="width: 90%">
+                    <h2 id="modal-name"></h2>
+                    <img id="modal-photo" alt="">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
       {{!-- <div id="notes">{{this.note}}</div> --}}
   {{/if}}    
   {{/each}}
-    </div>
+ 
