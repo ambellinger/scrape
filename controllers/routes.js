@@ -75,9 +75,42 @@ app.delete("/articles/:id", function (req, res) {
     if (err)
       res.send(err);
     else
-      res.json({ message: 'Note Deleted!' });
+      res.json({ message: 'Deleted!' });
   });
  });
+
+
+ //Deletes All Articles
+//Deletes Article
+app.get("/deleteall", function (req, res) {
+  db.Article.remove({}, function (err, response) {
+    if (err)
+      res.send(err);
+    else
+    console.log('collection removed'); 
+    res.send(response);
+  });
+
+  db.Note.remove({}, function (err, response) {
+    if (err)
+      res.send(err);
+    else
+    console.log('collection removed'); 
+    res.send(response);
+  });
+  
+//   db.drop({}, function(err) { 
+//     console.log('collection removed') 
+//  });
+  // db.drop({})
+  //        .then(function(dbArticle) {
+  //           res.json(dbArticle);
+  //           })
+  //            .catch(function(err) {
+  //            res.json(err);
+  //           })
+    });
+
 
  //Changes the Saved Field
  app.post("/articles/saved/:id", function (req, res) {
