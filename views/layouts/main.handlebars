@@ -13,48 +13,54 @@
 		<title>News</title>
 	</head>
 	<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Sports News</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/saved">Saved Articles</a>
+      </li>
+      <li class="nav-item">
+         <button class="btn btn-outline-danger" onClick="location.href='/'"><a href="/scrape">Scrape Articles</a></button>
+      </li>
+      <li class="nav-item">
+     <button class="btn btn-outline-danger" class="deleteall">Clear All Articles</button>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Sports News</h1>
+    <p class="lead">New York Times Edition</p>
+  </div>
+</div>
+
+{{!-- 
     <button><a href="/saved">Saved</a></button>
-    <button><a href="/">Home</a></button>
-    <button class="deleteall">Clear All Articles</button>
-    <a href="/notes">NOTES</a>
+    <button><a href="/">Home</a></button> --}}
+{{!-- 
+    <button onClick="location.href='/'"><a href="/scrape">Scrape Articles</a></button>
+    <button class="deleteall">Clear All Articles</button> --}}
+
 
 		{{{ body }}}
 	</body>
 
-<style>
-      body { background-color: #F2F6D0 }
-      #wrapper {
-        width: 960px;
-        margin-left: auto;
-        margin-right: auto;
-        padding-top: 5%;
-      }
-      #articles {
-        display: inline-block;
-        overflow: auto;
-        width: 60%;
-        height: 700px;
-      }
-      #notes {
-        width: 100%;
-      }
-      textarea, input {
-        display: block;
-        width: 100%;
-        background-color: #FCF5C7;
-      }
-      input {
-        height: 36px;
-        font-size: 24px;
-      }
-      textarea {
-        height: 200px;
-        font-size: 18px;
-      }
-</style>
+
 
 </html>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
  <script src="/assets/js/app.js"></script>
+ <script src="/assets/css/style.css"></script>
+ 

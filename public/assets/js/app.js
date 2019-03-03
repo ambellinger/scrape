@@ -1,37 +1,37 @@
 
+//Get all the articles for the home page and for the saved article page
 $.getJSON("/articles", function (data) {
- // For each one
-//  {
-//  for (var i = 0; i < data.length; i++) {
-//   // Display the apropos information on the page
-//   $("#articles").append("<p data-id='"+ data[i]._id+ "'> <a href='https://www.nytimes.com" + data[i].link + "' target='_blank'>" +  data[i].title + "</a>"
-//   + "<button data-id='" + data[i]._id + "' class='deletebtn'> Delete Article </button>" 
-//   + "<button data-id='" + data[i]._id + "' class='savedbtn'> Save Article </button>" 
-//   +  "</p>");
-// }
-//  }
+
 for (var i = 0; i < data.length; i++) {
   
   if (data[i].saved) {
   // Display the apropos information on the page
-  $("#savedarticles").append("<a href='https://www.nytimes.com" + data[i].link + "' target='_blank'>" +  data[i].title + "</a>"
+  $("#savedarticles").append("<div  class='alert alert-primary'> <a href='https://www.nytimes.com" + data[i].link + "' target='_blank'>" +  data[i].title + "</a>"
   + "<button data-id='" + data[i]._id + "' class='deletebtn'> Delete Article </button>" 
   + "<button type='button' data-id='" + data[i]._id + "' class='notesbtn btn btn-primary ' data-toggle='modal' data-target='#exampleModal'> Note</button>" 
   + "<p data-id='" + "'>"
-  + "   " + data[i].saved);
+  + "   " + data[i].saved + "</div>");
 } else  {
   
    // Display the apropos information on the page
-   $("#articles").append("<p data-id='"+ data[i]._id+ "'> <a href='https://www.nytimes.com" + data[i].link + "' target='_blank'>" +  data[i].title + "</a>"
+   $("#articles").append("<p class='alert alert-primary' data-id='"+ data[i]._id+ "'> <a href='https://www.nytimes.com" + data[i].link + "' target='_blank'>" +  data[i].title + "</a>"
    + "<button data-id='" + data[i]._id + "' class='deletebtn'> Delete Article </button>" 
    + "<button data-id='" + data[i]._id + "' class='savedbtn'> Save Article </button>" 
    +  "</p>");
- 
   }
 }
 });
 
-
+function getNotes() {
+  $.getJSON("/allnotes", function(data) {
+    // For each note...
+    for (var i = 0; i < data.length; i++) {
+      // ...populate #results with a p-tag that includes the note's title and object id
+      $("#notes").prepend("<p class='data-entry' data-id=" + data[i]._id + "><span class='dataTitle' data-id=" +
+        data[i]._id + ">" + data[i].title + "</span><button class=deletenote> Delete Note </button></p>");
+}
+  });
+};
 
 //NOTES
 // Whenever someone clicks a p tag
@@ -41,6 +41,7 @@ $(document).on("click", ".notesbtn", function () {
   // alert("hi");
   // Empty the notes from the note section
    $("#notes").empty();
+   getNotes();
   // Save the id from the p tag
   var thisId = $(this).attr("data-id");
 
@@ -69,6 +70,7 @@ $(document).on("click", ".notesbtn", function () {
       $("#notes").append("<textarea id='bodyinput' name='body' placeholder='Write Your Note Here'>" + data.title + "</textarea>");
       // A button to submit a new note, with the id of the article saved to it
       $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+      $("#notes").append( data._id );
 
     
 
@@ -105,7 +107,7 @@ $(document).on("click", "#savenote", function () {
       // Log the response
       console.log(data);
       // Empty the notes section
-      $("#notes").empty();
+       $("#notes").empty();
     });
 
   // Also, remove the values entered in the input and textarea for note entry
@@ -176,5 +178,32 @@ $(document).on("click", ".deleteall", function () {
   });
 
 
+$(document).on("click", ".deletenote", function() {
+    // Save the p tag that encloses the button
+    var thisId = $(this).attr("data-id");
+    console.log(thisId);
+    // Make an AJAX GET request to delete the specific note
+    // this uses the data-id of the p-tag, which is linked to the specific note
+    $.ajax({
+      type: "DELETE",
+      url: "/delete/" + thisId,
+    // })
+    // With that done
 
- 
+      // // On successful call
+      success: function(response) {
+        console("Success")
+         // Remove the p-tag from the DOM
+         //thisId.remove();
+         // Clear the note and title inputs
+         $("#note").val("");
+         $("#title").val("");
+         // Make sure the #action-button is submit (in case it's update)
+         $("#action-button").html("<button id='make-new'>Submit</button>");
+      }
+     })
+     
+     .then(function (data) {
+      location.reload(); 
+      });
+   });

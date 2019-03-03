@@ -29,8 +29,8 @@ app.get("/scrape", function(req, res) {
             .children("a")
             .attr("href");
         // result.blurb = $(this)
-        //     .children("p")
-        //     .text();
+        //      .children("p")
+        //      .text();
   
         // Create a new Article using the `result` object built from scraping
         db.Article.create(result)
@@ -43,12 +43,39 @@ app.get("/scrape", function(req, res) {
             console.log(err);
           });
       });
-  
       // Send a message to the client
-      res.send("Scrape Complete.. <a href='/'>home page</a>" );
+      res.redirect('/');
+      // res.send("scrape complete");
     });
+
+
+    // axios.get("https://www.nytimes.com/section/sports").then(function(response) {
+    //    // Then, we load that into cheerio and save it to $ for a shorthand selector
+    //    var $ = cheerio.load(response.data);
+    //  $("article").each(function(i, element) {
+    //       // Save an empty result object
+    //       var result = {}
+    //        result.blurb = $(this)
+    //           .children("p")
+    //            .text();
+  
+    //       // Create a new Article using the `result` object built from scraping
+    //       db.Blurb.create(result)
+    //         .then(function(dbArticle) {
+    //         // View the added result in the console
+    //           console.log("results" + dbArticle);
+    //         })
+    //         .catch(function(err) {
+    //           // If an error occurred, log it
+    //           console.log(err);
+    //         });
+    //     });
+    //    // Send a message to the client
+    //    res.send("Scrape Complete.. <a href='/'>home page</a>" );
+    //  });
   });
 
+  
 // Route for getting all Articles from the db
   app.get("/", function(req, res) {
     // Grab every document in the Articles collection
@@ -68,7 +95,7 @@ app.get("/scrape", function(req, res) {
 
   
 //Deletes Article
-app.delete("/articles/:id", function (req, res) {
+app.delete("/delete/:id", function (req, res) {
 
   console.log("id:"+req.params.id);
   db.Article.findByIdAndRemove(req.params.id, function (err) {
@@ -79,6 +106,31 @@ app.delete("/articles/:id", function (req, res) {
   });
  });
 
+   
+//Deletes Note
+app.delete("/delete/:id", function (req, res) {
+
+  db.Note.findByIdAndRemove(req.params.id, function(err) {
+    if (err) {
+      console.log(err);
+      res.send(error);
+    }
+    else {
+      // Otherwise, send the mongojs response to the browser
+      // This will fire off the success function of the ajax request
+      console.log(removed);
+      res.send(removed);
+      }
+    }
+  );
+  // console.log("id:"+req.params.id);
+  // db.Note.findByIdAndRemove(req.params.id, function (err) {
+  //   if (err)
+  //     res.send(err);
+  //   else
+  //     res.json({ message: 'Deleted!' });
+  // });
+ });
 
  //Deletes All Articles
 //Deletes Article
@@ -98,17 +150,6 @@ app.get("/deleteall", function (req, res) {
     console.log('collection removed'); 
     res.send(response);
   });
-  
-//   db.drop({}, function(err) { 
-//     console.log('collection removed') 
-//  });
-  // db.drop({})
-  //        .then(function(dbArticle) {
-  //           res.json(dbArticle);
-  //           })
-  //            .catch(function(err) {
-  //            res.json(err);
-  //           })
     });
 
 
@@ -122,19 +163,6 @@ app.get("/deleteall", function (req, res) {
        res.json(err);
      })
   });
-
-
-//  app.get("/deleteall", function(req, res) {
-//       console.log("DELETE ALL BUTTON");
-//      db.Article.remove({})
-//       .then(function(dbArticle) {
-//          res.json(dbArticle);
-//          })
-//           .catch(function(err) {
-//           res.json(err);
-//          })
-//      });
-
 
 //Gets the Saved Articles
   app.get("/saved", function(req, res) {
@@ -202,5 +230,23 @@ app.get("/deleteall", function (req, res) {
       });
   });
   
+  app.get("/allnotes", function(req, res) {
+    // Find all notes in the notes collection
+    db.Note.find({}, function(error, found) {
+      // Log any errors
+      if (error) {
+        console.log(error);
+      }
+      else {
+        // Otherwise, send json of the notes back to user
+        // This will fire off the success function of the ajax request
+        res.json(found);
+      }
+    });
+  });
+
+  // Delete One from the DB
+
+
 
   module.exports = app;
