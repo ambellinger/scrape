@@ -6,8 +6,10 @@
 
     <!-- Bootstrap File -->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="../../public/assets/css/style.css">
+        {{!-- <link rel="stylesheet" href="assets/css/style.css"> --}}
 
+
+{{!-- onClick="location.href='/' --}}
       <!-- jQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -30,10 +32,10 @@
         <a class="nav-link" href="/saved">Saved Articles</a>
       </li>
       <li class="nav-item">
-         <button class="btn btn-outline-danger" onClick="location.href='/'"><a href="/scrape">Scrape Articles</a></button>
+        <a href="/scrape" class="btn btn-outline-danger" >Scrape Articles</a>
       </li>
       <li class="nav-item">
-     <button class="btn btn-outline-danger" class="deleteall">Clear All Articles</button>
+     <a class="btn btn-outline-danger" class="deleteall">Clear All Articles</a>
       </li>
     </ul>
   </div>

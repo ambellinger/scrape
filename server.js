@@ -3,12 +3,13 @@ var logger = require("morgan");
 var mongoose = require("mongoose");
 var db = require("./models");
 
+var PORT = 3000;
 
-var PORT = process.env.PORT || 3000;
+// var PORT = process.env.PORT || 3000;
 
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+// var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
-mongoose.connect(MONGODB_URI);
+//  mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 
 //CODE THAT PHIL SENT US///
@@ -43,9 +44,10 @@ var routes = require("./controllers/routes");
 
  //var routes = express.Router();
 
-// // Connect to the Mongo DB
-// mongoose.connect("mongodb://localhost/mongoheadlinenews", { useNewUrlParser: true });
-
+// // // Connect to the Mongo DB
+//  mongoose.connect("mongodb://localhost/mongoheadlinenews", { useNewUrlParser: true });
+// Connect to the Mongo DB
+mongoose.connect("mongodb://localhost/mongoheadline", { useNewUrlParser: true });
 // Start the server
 app.listen(PORT, function() {
   console.log("App running on port " + PORT + "!");
