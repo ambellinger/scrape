@@ -6,17 +6,17 @@ for (var i = 0; i < data.length; i++) {
   
   if (data[i].saved) {
   // Display the apropos information on the page
-  $("#savedarticles").append("<div  class='alert alert-primary'> <a href='https://www.nytimes.com" + data[i].link + "' target='_blank'>" +  data[i].title + "</a>"
-  + "<button data-id='" + data[i]._id + "' class='deletebtn'> Delete Article </button>" 
+  $("#savedarticles").append("<div class='alert alert-primary'> <a href='https://www.nytimes.com" + data[i].link + "' target='_blank'>" +  data[i].title + "</a>"
+  + "<button class='btn btn-light' data-id='" + data[i]._id + "' class='deletebtn'> Delete Article </button>" 
   + "<button type='button' data-id='" + data[i]._id + "' class='notesbtn btn btn-primary ' data-toggle='modal' data-target='#exampleModal'> Note</button>" 
   + "<p data-id='" + "'>"
-  + "   " + data[i].saved + "</div>");
+  + "   "  + "</div>");
 } else  {
   
    // Display the apropos information on the page
    $("#articles").append("<p class='alert alert-primary' data-id='"+ data[i]._id+ "'> <a href='https://www.nytimes.com" + data[i].link + "' target='_blank'>" +  data[i].title + "</a>"
-   + "<button data-id='" + data[i]._id + "' class='deletebtn'> Delete Article </button>" 
-   + "<button data-id='" + data[i]._id + "' class='savedbtn'> Save Article </button>" 
+   + "<button class='btn btn-light' data-id='" + data[i]._id + "' class='deletebtn'> Delete Article </button>" 
+   + "<button class='btn btn-info' data-id='" + data[i]._id + "' class='savedbtn'> Save Article </button>" 
    +  "</p>");
   }
 }
@@ -24,11 +24,13 @@ for (var i = 0; i < data.length; i++) {
 
 function getNotes() {
   $.getJSON("/allnotes", function(data) {
+
+    $("#notes").append("<p class='previousNotes'> Previous Notes</p> <ul class='list-group list-group-flush'>");
     // For each note...
     for (var i = 0; i < data.length; i++) {
       // ...populate #results with a p-tag that includes the note's title and object id
-      $("#notes").prepend("<p class='data-entry' data-id=" + data[i]._id + "><span class='dataTitle' data-id=" +
-        data[i]._id + ">" + data[i].title + "</span><button class=deletenote> Delete Note </button></p>");
+      $("#notes").append(" <li class='list-group-item' p id='previousNotes' class='data-entry' data-id=" + data[i]._id + "><span class='dataTitle' data-id=" +
+        data[i]._id + ">" + data[i].title + "</span><button class='btn btn-info' class=deletenote> Delete Note </button></p></li>");
 }
   });
 };
@@ -67,10 +69,10 @@ $(document).on("click", ".notesbtn", function () {
       // An input to enter a new title
       $("#notes").append("<input id='titleinput' name='title' placeholder='Title of Note'>");
       // A textarea to add a new note body
-      $("#notes").append("<textarea id='bodyinput' name='body' placeholder='Write Your Note Here'>" + data.title + "</textarea>");
+      $("#notes").append("<textarea id='bodyinput' name='body' placeholder='Write Your Note Here'>" + "Write Your Note Here"+ "</textarea>");
       // A button to submit a new note, with the id of the article saved to it
-      $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
-      $("#notes").append( data._id );
+      $("#notes").append("<button class='btn btn-info' data-id='" + data._id + "' id='savenote'>Save Note</button>");
+    
 
     
 

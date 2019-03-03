@@ -1,5 +1,4 @@
 
-
  body { background-color: red }
 #wrapper {
   width: 960px;
@@ -21,7 +20,7 @@
 }
 textarea, input {
   display: block;
-  width: 100%;
+  width: 10%;
   background-color: #FCF5C7;
 }
 input {
