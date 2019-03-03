@@ -121,11 +121,11 @@ $.getJSON("/articles", function (data) {
   $(document).on("click", ".deletebtn", function () {
     // Grab the id associated with the article from the submit button
     var thisId = $(this).attr("data-id");
-   
+   //alert(thisId );
     // Run a POST request to change the note, using what's entered in the inputs
     $.ajax({
       method: "DELETE",
-      url: "/articles/" + thisId
+      url: "/delete/" + thisId
   
     })
       // With that done
