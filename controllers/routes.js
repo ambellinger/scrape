@@ -49,31 +49,7 @@ app.get("/scrape", function(req, res) {
     });
   });
 
-
-  
-//delete note
-app.delete("/articles/:id", function (req, res) {
-
-  console.log("id:"+req.params.id);
-  db.Article.findByIdAndRemove(req.params.id, function (err) {
-    if (err)
-      res.send(err);
-    else
-      res.json({ message: 'Note Deleted!' });
-  });
- });
-
-app.post("/articles/:id", function (req, res) {
-   db.Article.findByIdAndUpdate({_id: req.params.id}, { saved: true })
-    .then(function(dbArticle) {
-      res.json(dbArticle);
-    })
-    .catch(function(err) {
-      res.json(err);
-    })
- });
-
-  // Route for getting all Articles from the db
+// Route for getting all Articles from the db
   app.get("/", function(req, res) {
     // Grab every document in the Articles collection
     db.Article.find({})
@@ -90,20 +66,44 @@ app.post("/articles/:id", function (req, res) {
       });
   });
 
+  
+//Deletes Article
+app.delete("/articles/:id", function (req, res) {
 
- app.get("/deleteall", function(req, res) {
-      console.log("DELETE ALL BUTTON");
-     db.Article.remove({})
-      .then(function(dbArticle) {
-         res.json(dbArticle);
-         })
-          .catch(function(err) {
-          res.json(err);
-         })
-     });
+  console.log("id:"+req.params.id);
+  db.Article.findByIdAndRemove(req.params.id, function (err) {
+    if (err)
+      res.send(err);
+    else
+      res.json({ message: 'Note Deleted!' });
+  });
+ });
+
+ //Changes the Saved Field
+ app.post("/articles/saved/:id", function (req, res) {
+    db.Article.findByIdAndUpdate({_id: req.params.id}, { saved: true })
+     .then(function(dbArticle) {
+       res.json(dbArticle);
+     })
+     .catch(function(err) {
+       res.json(err);
+     })
+  });
 
 
+//  app.get("/deleteall", function(req, res) {
+//       console.log("DELETE ALL BUTTON");
+//      db.Article.remove({})
+//       .then(function(dbArticle) {
+//          res.json(dbArticle);
+//          })
+//           .catch(function(err) {
+//           res.json(err);
+//          })
+//      });
 
+
+//Gets the Saved Articles
   app.get("/saved", function(req, res) {
     db.Article.find({saved:true})
     .then(function(data) {
@@ -168,5 +168,6 @@ app.post("/articles/:id", function (req, res) {
         res.json(err);
       });
   });
+  
 
   module.exports = app;

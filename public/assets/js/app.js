@@ -24,19 +24,15 @@ for (var i = 0; i < data.length; i++) {
 });
 
 
-$(".modal").hide();
-
 
 //NOTES
 // Whenever someone clicks a p tag
 $(document).on("click", ".notesbtn", function () {
-  $(".modal").show();
-  // <!-- Modal -->
-  
-
-  //alert("hi");
+  // $(".modal").show();
+  // // <!-- Modal -->
+  // alert("hi");
   // Empty the notes from the note section
-  $("#notes").empty();
+   $("#notes").empty();
   // Save the id from the p tag
   var thisId = $(this).attr("data-id");
 
@@ -47,16 +43,14 @@ $(document).on("click", ".notesbtn", function () {
   })
     // With that done, add the note information to the page
     .then(function (data) {
-      $(".modal").modal("toggle");
-
 
       console.log(data);
       // The title of the article
       $("#notes").append("<h2>" + data.title + "</h2>");
       // An input to enter a new title
-      $("#notes").append("<input id='titleinput' name='title' >");
+      $("#notes").append("<input id='titleinput' name='title' placeholder='Title of Note'>");
       // A textarea to add a new note body
-      $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
+      $("#notes").append("<textarea id='bodyinput' name='body' placeholder='Write Your Note Here'>" + data.title + "</textarea>");
       // A button to submit a new note, with the id of the article saved to it
       $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
 
@@ -72,6 +66,7 @@ $(document).on("click", ".notesbtn", function () {
 
 // When you click the savenote button
 $(document).on("click", "#savenote", function () {
+  // alert("hi");
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
 
@@ -84,6 +79,7 @@ $(document).on("click", "#savenote", function () {
       title: $("#titleinput").val(),
       // Value taken from note textarea
       body: $("#bodyinput").val()
+      
     }
   })
     // With that done
@@ -128,7 +124,7 @@ $(document).on("click", ".savedbtn", function () {
   // Run a POST request to change the note, using what's entered in the inputs
    $.ajax({
      method: "POST",
-     url: "/articles/" + thisId
+     url: "/articles/saved/" + thisId
 
    })
      // With that done
@@ -152,8 +148,6 @@ $(document).on("click", ".deleteall", function () {
 
   });
 
-  // Also, remove the values entered in the input and textarea for note entry
-  $("#titleinput").val("");
-  $("#bodyinput").val("");
+
 
  

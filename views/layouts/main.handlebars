@@ -3,6 +3,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Bootstrap File -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+      <!-- jQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 	<meta charset="UTF-8">
 		<title>News</title>
 	</head>
@@ -10,6 +16,7 @@
     <button><a href="/saved">Saved</a></button>
     <button><a href="/">Home</a></button>
     <button class="deleteall">Clear All Articles</button>
+    <a href="/notes">NOTES</a>
 
 		{{{ body }}}
 	</body>
@@ -29,8 +36,7 @@
         height: 700px;
       }
       #notes {
-        float: right;
-        width: 30%;
+        width: 100%;
       }
       textarea, input {
         display: block;
